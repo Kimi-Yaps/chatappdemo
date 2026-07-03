@@ -30,6 +30,11 @@ export interface WsChannel {
   pinned?: boolean;
 }
 
+export interface IdleWarning {
+  remainingSec: number;
+  message: string;
+}
+
 export type ConnectionState = "connecting" | "connected" | "disconnected" | "error";
 
 interface UseChat {
@@ -38,6 +43,8 @@ interface UseChat {
   channels: WsChannel[];
   onlineCount: number;
   connectionState: ConnectionState;
+  idleWarning: IdleWarning | null;  // set when server sends idle_warning
+  sessionExpired: boolean;          // set when server terminates for inactivity
   sendMessage: (channelId: string, content: string) => void;
   switchChannel: (channelId: string) => void;
   sendReaction: (messageId: string, channelId: string, emoji: string) => void;
@@ -57,6 +64,8 @@ export function useChat(): UseChat {
   const [channels,        setChannels]        = useState<WsChannel[]>([]);
   const [onlineCount,     setOnlineCount]     = useState(0);
   const [connectionState, setConnectionState] = useState<ConnectionState>("connecting");
+  const [idleWarning,     setIdleWarning]     = useState<IdleWarning | null>(null);
+  const [sessionExpired,  setSessionExpired]  = useState(false);
 
   // Keep a ref so event handlers always read fresh state
   const messagesRef = useRef(messages);
@@ -144,6 +153,19 @@ export function useChat(): UseChat {
           });
           break;
         }
+
+        // Server warns that the session will expire soon due to inactivity
+        case "idle_warning": {
+          setIdleWarning({ remainingSec: data.remainingSec, message: data.message });
+          break;
+        }
+
+        // Server terminated the session due to inactivity
+        case "session_expired": {
+          setSessionExpired(true);
+          setIdleWarning(null);
+          break;
+        }
       }
     };
 
@@ -184,6 +206,8 @@ export function useChat(): UseChat {
     channels,
     onlineCount,
     connectionState,
+    idleWarning,
+    sessionExpired,
     sendMessage,
     switchChannel,
     sendReaction,

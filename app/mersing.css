@@ -1,0 +1,101 @@
+/* ─── Visit & Travel Mersing — Design System ───────────────────────────── */
+
+@font-face {
+  font-family: "ArrayBold";
+  src: url("/Array-Bold.ttf") format("truetype");
+  font-weight: bold;
+  font-style: normal;
+  font-display: swap;
+}
+
+/* Scoped VM (Visit Mersing) tokens — light cream theme */
+:root {
+  --vm-bg:           #ECE7DC;
+  --vm-card:         #E2DBCE;
+  --vm-card-hover:   #D8D0C2;
+  --vm-border:       rgba(90,70,50,0.14);
+  --vm-border-dark:  rgba(90,70,50,0.28);
+  --vm-text-primary:   #2D1F12;
+  --vm-text-secondary: #6B5440;
+  --vm-text-muted:     #A08A74;
+  --vm-blue:         #2347E0;
+  --vm-blue-dark:    #1A36B8;
+  --vm-blue-light:   rgba(35,71,224,0.10);
+  --vm-brown-dark:   #4A2E12;
+  --vm-brown:        #6B3A1F;
+  --vm-footer-bg:    #1C3DBF;
+  --vm-marquee-bg:   #ECE7DC;
+  --vm-shadow:       0 2px 16px rgba(60,40,20,0.10);
+  --vm-shadow-lg:    0 8px 40px rgba(60,40,20,0.18);
+  --vm-radius:       12px;
+  --vm-radius-lg:    20px;
+}
+
+/* Page wrapper — opt-in to light theme */
+.vm-page {
+  background: var(--vm-bg);
+  color: var(--vm-text-primary);
+  font-family: "Inter", -apple-system, BlinkMacSystemFont, sans-serif;
+  min-height: 100vh;
+  overflow-x: hidden;
+}
+
+/* Override body overflow for scrollable pages */
+.vm-page body,
+body.vm-scrollable {
+  overflow: auto !important;
+}
+
+/* ── Array font helper ────────────────────────────────────────────────────── */
+.font-array {
+  font-family: "ArrayBold", monospace;
+}
+
+/* ── Marquee ─────────────────────────────────────────────────────────────── */
+@keyframes vm-marquee {
+  from { transform: translateX(0); }
+  to   { transform: translateX(-50%); }
+}
+.vm-marquee-track {
+  display: flex;
+  white-space: nowrap;
+  animation: vm-marquee 24s linear infinite;
+}
+
+/* ── Fade in ─────────────────────────────────────────────────────────────── */
+@keyframes vm-fade-up {
+  from { opacity: 0; transform: translateY(18px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+.vm-fade-up { animation: vm-fade-up 0.5s ease forwards; }
+
+/* ── Timeline dot pulse ──────────────────────────────────────────────────── */
+@keyframes vm-dot-pulse {
+  0%,100% { box-shadow: 0 0 0 0 rgba(74,46,18,0.4); }
+  50%      { box-shadow: 0 0 0 8px rgba(74,46,18,0); }
+}
+.vm-dot-pulse { animation: vm-dot-pulse 2s ease-in-out infinite; }
+
+/* ── FAQ expand ──────────────────────────────────────────────────────────── */
+.vm-faq-answer {
+  max-height: 0;
+  overflow: hidden;
+  transition: max-height 0.35s ease, padding 0.3s ease;
+}
+.vm-faq-answer.open {
+  max-height: 400px;
+}
+
+/* ── Hover card lift ─────────────────────────────────────────────────────── */
+.vm-card-lift {
+  transition: transform 220ms ease, box-shadow 220ms ease;
+}
+.vm-card-lift:hover {
+  transform: translateY(-4px);
+  box-shadow: var(--vm-shadow-lg);
+}
+
+/* ── Scrollbar for light pages ───────────────────────────────────────────── */
+.vm-page ::-webkit-scrollbar { width: 5px; }
+.vm-page ::-webkit-scrollbar-track { background: var(--vm-card); }
+.vm-page ::-webkit-scrollbar-thumb { background: var(--vm-border-dark); border-radius: 99px; }

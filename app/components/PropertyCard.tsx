@@ -32,14 +32,26 @@ export default function PropertyCard({ property: p }: PropertyCardProps) {
           el.style.borderColor = "var(--border-subtle)";
         }}
       >
-        {/* Image / Gradient Hero */}
+        {/* Image Placeholder */}
         <div style={{
-          height: 160, background: p.gradient, position: "relative",
-          display: "flex", alignItems: "flex-end", padding: "12px 14px",
+          height: 160, position: "relative",
+          background: "var(--bg-elevated)",
+          borderBottom: "1px solid var(--border-subtle)",
+          display: "flex", flexDirection: "column",
+          alignItems: "center", justifyContent: "center",
+          gap: 6,
+          color: "var(--text-muted)",
         }}>
+          {/* Camera icon */}
+          <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" opacity="0.4">
+            <path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"/>
+            <circle cx="12" cy="13" r="4"/>
+          </svg>
+          <span style={{ fontSize: 11, opacity: 0.5 }}>Foto akan ditambah</span>
+
           {/* Availability badge */}
           <span style={{
-            position: "absolute", top: 12, right: 12,
+            position: "absolute", top: 10, right: 10,
             background: p.available ? "rgba(34,197,94,0.9)" : "rgba(239,68,68,0.85)",
             backdropFilter: "blur(8px)",
             color: "#fff", fontSize: 11, fontWeight: 700,
@@ -50,8 +62,9 @@ export default function PropertyCard({ property: p }: PropertyCardProps) {
 
           {/* Type badge */}
           <span style={{
-            background: "rgba(0,0,0,0.45)", backdropFilter: "blur(8px)",
-            color: "#fff", fontSize: 10, fontWeight: 600,
+            position: "absolute", bottom: 10, left: 10,
+            background: "var(--bg-sidebar)", border: "1px solid var(--border-subtle)",
+            color: "var(--text-secondary)", fontSize: 10, fontWeight: 600,
             borderRadius: 99, padding: "3px 10px", letterSpacing: "0.04em",
           }}>
             {p.type === "apartment" ? "🏢 Apartment" : p.type === "house" ? "🏠 Rumah" : "🛏️ Hostel"}

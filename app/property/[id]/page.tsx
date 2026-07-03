@@ -48,22 +48,76 @@ export default function PropertyDetailPage() {
 
           {/* ── LEFT COLUMN ──────────────────────────────── */}
           <div>
-            {/* Hero image */}
+            {/* Hero image gallery placeholder */}
             <div style={{
-              height: 280, borderRadius: 18, marginBottom: 28,
-              background: property.gradient, position: "relative",
-              display: "flex", alignItems: "flex-end", padding: "20px 24px",
+              display: "grid",
+              gridTemplateColumns: "1fr 1fr",
+              gridTemplateRows: "160px 140px",
+              gap: 6,
+              borderRadius: 18,
               overflow: "hidden",
+              marginBottom: 28,
+              position: "relative",
             }}>
-              <div style={{ position: "absolute", inset: 0, background: "linear-gradient(to top, rgba(0,0,0,0.55) 0%, transparent 50%)" }} />
-              <div style={{ position: "relative", zIndex: 1 }}>
-                <h1 style={{ fontSize: 22, fontWeight: 800, color: "#fff", lineHeight: 1.3, marginBottom: 6 }}>
-                  {property.title}
-                </h1>
-                <div style={{ display: "flex", alignItems: "center", gap: 6, fontSize: 13, color: "rgba(255,255,255,0.8)" }}>
-                  <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
-                  {property.location}
+              {/* Main large placeholder */}
+              <div style={{
+                gridRow: "1 / 3",
+                background: "var(--bg-elevated)",
+                border: "1px solid var(--border-subtle)",
+                display: "flex", flexDirection: "column",
+                alignItems: "center", justifyContent: "center",
+                gap: 8, color: "var(--text-muted)",
+              }}>
+                <svg width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" opacity="0.35">
+                  <path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"/>
+                  <circle cx="12" cy="13" r="4"/>
+                </svg>
+                <span style={{ fontSize: 12, opacity: 0.45 }}>Foto utama</span>
+              </div>
+
+              {/* 4 smaller placeholders */}
+              {[1,2,3,4].map((n) => (
+                <div key={n} style={{
+                  background: "var(--bg-elevated)",
+                  border: "1px solid var(--border-subtle)",
+                  display: "flex", alignItems: "center", justifyContent: "center",
+                  color: "var(--text-muted)",
+                  position: "relative",
+                }}>
+                  <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" opacity="0.3">
+                    <path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"/>
+                    <circle cx="12" cy="13" r="4"/>
+                  </svg>
+                  {/* "Show All Photos" overlay on last tile */}
+                  {n === 4 && (
+                    <div style={{
+                      position: "absolute", inset: 0,
+                      background: "rgba(0,0,0,0.35)",
+                      display: "flex", alignItems: "center", justifyContent: "center",
+                      gap: 6, cursor: "pointer",
+                      color: "#fff", fontSize: 12, fontWeight: 600,
+                    }}>
+                      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                        <rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/>
+                        <rect x="14" y="14" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/>
+                      </svg>
+                      Show All Photos
+                    </div>
+                  )}
                 </div>
+              ))}
+            </div>
+
+            {/* Title + location (moved out of hero) */}
+            <div style={{ marginBottom: 20 }}>
+              <h1 style={{ fontSize: 24, fontWeight: 800, color: "var(--text-primary)", lineHeight: 1.3, marginBottom: 6 }}>
+                {property.title}
+              </h1>
+              <div style={{ display: "flex", alignItems: "center", gap: 5, fontSize: 13, color: "var(--text-muted)" }}>
+                <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                  <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/>
+                </svg>
+                {property.location}
               </div>
             </div>
 
